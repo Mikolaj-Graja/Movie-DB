@@ -20,13 +20,26 @@ export default {
     // fetch(`https://api.themoviedb.org/3/movie/${this.id}?api_key=${api_key}`)
     fetch(`https://api.themoviedb.org/3/configuration?api_key=${api_key}`)
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => {
+        console.log(data);
+        this.searchMovie(this.keyword);
+      })
       .catch(err => alert(err));
   },
   data() {
     return {
-      id: 550
+      id: 550,
+      keyword: "black"
     };
+  },
+  methods: {
+    searchMovie(keyword) {
+      fetch(
+        `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${keyword}`
+      )
+        .then(response => response.json())
+        .then(data => console.log(data));
+    }
   }
 };
 </script>
