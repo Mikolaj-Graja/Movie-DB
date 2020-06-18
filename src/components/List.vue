@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Search />
+    <Search @handleSearch="handleSearch" />
     <ul>
       <li></li>
     </ul>
@@ -17,23 +17,20 @@ export default {
     Search
   },
   created() {
-    // fetch(`https://api.themoviedb.org/3/movie/${this.id}?api_key=${api_key}`)
     fetch(`https://api.themoviedb.org/3/configuration?api_key=${api_key}`)
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        this.searchMovie(this.keyword);
+        // this.handleSearch(this.keyword);
       })
       .catch(err => alert(err));
   },
   data() {
-    return {
-      id: 550,
-      keyword: "black"
-    };
+    return {};
   },
   methods: {
-    searchMovie(keyword) {
+    handleSearch(keyword) {
+      console.log(keyword);
       fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${keyword}`
       )

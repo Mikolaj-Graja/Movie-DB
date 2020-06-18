@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- <logo/> -->
     <List />
   </div>
 </template>
