@@ -1,18 +1,15 @@
 <template>
   <div id="app">
     <List />
-    <Search />
   </div>
 </template>
 
 <script>
-import Search from "./components/Search.vue";
 import List from "./components/List.vue";
 
 export default {
   name: "App",
   components: {
-    Search,
     List
   }
 };

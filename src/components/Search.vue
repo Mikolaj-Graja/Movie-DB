@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <input type="text" placeholder="search" />
 </template>
 
 <script>
