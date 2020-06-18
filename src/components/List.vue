@@ -1,6 +1,9 @@
 <template>
   <div>
     <Search />
+    <ul>
+      <li></li>
+    </ul>
   </div>
 </template>
 
@@ -14,15 +17,22 @@ export default {
     Search
   },
   created() {
-    fetch("http://example.com/movies.json")
+    // fetch(`https://api.themoviedb.org/3/movie/${this.id}?api_key=${api_key}`)
+    fetch(`https://api.themoviedb.org/3/configuration?api_key=${api_key}`)
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => console.log(data))
+      .catch(err => alert(err));
   },
   data() {
-    key: api_key;
+    return {
+      id: 550
+    };
   }
 };
 </script>
 
 <style>
+ul {
+  list-style-type: none;
+}
 </style>
