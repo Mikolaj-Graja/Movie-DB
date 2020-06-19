@@ -1,18 +1,20 @@
 <template>
   <div id="app">
-    <!-- <logo/> -->
     <List />
+    <MadeBy />
   </div>
 </template>
 
 <script>
-import List from './components/List';
+import List from "./components/List";
+import MadeBy from "./components/MadeBy";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     List,
-  },
+    MadeBy
+  }
 };
 </script>
 
