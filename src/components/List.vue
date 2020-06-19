@@ -1,24 +1,10 @@
 <template>
   <div>
-    <div class="container">
-      <div class="jumbotron">
-        <h1 class="display-3">Search for a movie</h1>
-        <Search @handleSearch="handleSearch" class="lead" />
-        <hr class="my-4" />
-        <p class="lead">
-          <a class="btn btn-primary btn-lg" href="#" role="button"
-            >Learn more</a
-          >
-        </p>
-      </div>
-    </div>
+    <Header @handleSearch="handleSearch" />
+
     <div class="container">
       <ul>
-        <li
-          v-for="result in searchResult"
-          :key="result.id"
-          class="text-white card"
-        >
+        <li v-for="result in searchResult" :key="result.id" class="text-white card">
           <img :src="base_URL + result.poster_path" />
           <p class="title">{{ result.title }}</p>
           <p>Popularity: {{ result.popularity }}</p>
@@ -30,29 +16,29 @@
 </template>
 
 <script>
-import Search from './Search';
-import api_key from './API_key'; // API_key.js is in .gitignore, bacaue it is unique and cannot be seen in public
+import Header from "./Header";
+import api_key from "./API_key"; // API_key.js is in .gitignore, bacaue it is unique and cannot be seen in public
 
 export default {
-  name: 'List',
+  name: "List",
   props: [],
   components: {
-    Search,
+    Header
   },
   created() {
     fetch(`https://api.themoviedb.org/3/configuration?api_key=${api_key}`)
-      .then((response) => response.json())
-      .then((data) => {
+      .then(response => response.json())
+      .then(data => {
         console.log(data);
       })
-      .catch((err) => alert(err));
+      .catch(err => alert(err));
   },
   data() {
     return {
-      searchResult: '',
-      configuration: 'w500',
+      searchResult: "",
+      configuration: "w500",
       base_URL: `https://image.tmdb.org/t/p/w200`,
-      keyword: '',
+      keyword: ""
     };
   },
   methods: {
@@ -61,12 +47,12 @@ export default {
       fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${keyword}`
       )
-        .then((response) => response.json())
-        .then((data) => {
+        .then(response => response.json())
+        .then(data => {
           this.searchResult = data.results;
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
