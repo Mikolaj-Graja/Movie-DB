@@ -2,14 +2,17 @@
   <div>
     <Search @handleSearch="handleSearch" />
     <ul>
-      <li></li>
+      <li v-for="result in searchResult" :key="result.id">
+        {{ result.title }}
+        <img :src="base_URL + result.poster_path" />
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
-import Search from "./Search.vue";
-import api_key from "./API_key";
+import Search from "./Search";
+import api_key from "./API_key"; // API_key.js is in .gitignore, bacaue it is unique and cannot be seen in public
 export default {
   name: "List",
   props: [],
@@ -21,12 +24,18 @@ export default {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        // this.handleSearch(this.keyword);
       })
       .catch(err => alert(err));
   },
   data() {
-    return {};
+    return {
+      searchResult: "",
+      configuration: "w500",
+      // result: "",
+      base_URL: `https://image.tmdb.org/t/p/w200`
+
+      // https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg
+    };
   },
   methods: {
     handleSearch(keyword) {
@@ -35,7 +44,10 @@ export default {
         `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${keyword}`
       )
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(data => {
+          this.searchResult = data.results;
+          // console.log(this.searchResult);
+        });
     }
   }
 };
