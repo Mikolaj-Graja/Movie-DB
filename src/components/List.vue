@@ -13,23 +13,33 @@
             Number of votes:
             <b>{{ result.vote_count }}</b>
           </p>
+          <button
+            class="btn btn-info"
+            href="#"
+            role="button"
+            @click="handlemoreInfo(result.id)"
+          >More Details</button>
         </li>
       </ul>
       <div v-else class="no-result">
         <div class="alert alert-dismissible alert-primary">No results for your keyword</div>
         <div class="space"></div>
       </div>
+      <MovieDetail v-if="moreInfo" :movieInfo="movieInfo" />
     </div>
   </div>
 </template>
 
 <script>
 import api_key from "./API_key"; // API_key.js is in .gitignore, bacaue it is unique and cannot be seen in public
+import MovieDetail from "./MovieDetail";
 
 export default {
   name: "List",
   props: ["searchResult"],
-  components: {},
+  components: {
+    MovieDetail
+  },
   created() {
     fetch(`https://api.themoviedb.org/3/configuration?api_key=${api_key}`)
       .then(response => response.json())
@@ -42,8 +52,16 @@ export default {
     return {
       configuration: "w500",
       base_URL: `https://image.tmdb.org/t/p/w200`,
-      keyword: ""
+      keyword: "",
+      moreInfo: false,
+      movieInfo: {}
     };
+  },
+  methods: {
+    handlemoreInfo(id) {
+      console.log(id);
+      this.movieInfo = this.moreInfo = true;
+    }
   }
 };
 </script>
@@ -57,7 +75,7 @@ ul {
   padding: 2px;
 }
 li {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   max-width: 200px;
 }
 .title {
