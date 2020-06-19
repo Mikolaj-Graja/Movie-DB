@@ -6,13 +6,13 @@
 </template>
 
 <script>
-import List from "./components/List";
+import List from './components/List';
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    List
-  }
+    List,
+  },
 };
 </script>
 

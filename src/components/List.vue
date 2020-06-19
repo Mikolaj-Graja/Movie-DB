@@ -1,40 +1,58 @@
 <template>
   <div>
-    <Search @handleSearch="handleSearch" />
-    <ul>
-      <li v-for="result in searchResult" :key="result.id">
-        {{ result.title }}
-        <img :src="base_URL + result.poster_path" />
-      </li>
-    </ul>
+    <div class="container">
+      <div class="jumbotron">
+        <h1 class="display-3">Search for a movie</h1>
+        <Search @handleSearch="handleSearch" class="lead" />
+        <hr class="my-4" />
+        <p class="lead">
+          <a class="btn btn-primary btn-lg" href="#" role="button"
+            >Learn more</a
+          >
+        </p>
+      </div>
+    </div>
+    <div class="container">
+      <ul>
+        <li
+          v-for="result in searchResult"
+          :key="result.id"
+          class="text-white card"
+        >
+          <img :src="base_URL + result.poster_path" />
+          <p class="title">{{ result.title }}</p>
+          <p>Popularity: {{ result.popularity }}</p>
+          <p>Number of votes: {{ result.vote_count }}</p>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
-import Search from "./Search";
-import api_key from "./API_key"; // API_key.js is in .gitignore, bacaue it is unique and cannot be seen in public
+import Search from './Search';
+import api_key from './API_key'; // API_key.js is in .gitignore, bacaue it is unique and cannot be seen in public
+
 export default {
-  name: "List",
+  name: 'List',
   props: [],
   components: {
-    Search
+    Search,
   },
   created() {
     fetch(`https://api.themoviedb.org/3/configuration?api_key=${api_key}`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         console.log(data);
       })
-      .catch(err => alert(err));
+      .catch((err) => alert(err));
   },
   data() {
     return {
-      searchResult: "",
-      configuration: "w500",
-      // result: "",
-      base_URL: `https://image.tmdb.org/t/p/w200`
-
-      // https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg
+      searchResult: '',
+      configuration: 'w500',
+      base_URL: `https://image.tmdb.org/t/p/w200`,
+      keyword: '',
     };
   },
   methods: {
@@ -43,18 +61,31 @@ export default {
       fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${keyword}`
       )
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           this.searchResult = data.results;
-          // console.log(this.searchResult);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style>
 ul {
   list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 2px;
+}
+li {
+  margin-bottom: 10px;
+  max-width: 200px;
+}
+.title {
+  font-size: large;
+  font-weight: 800;
+  line-height: 40px;
+  color: green;
 }
 </style>

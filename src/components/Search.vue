@@ -1,23 +1,27 @@
 <template>
-  <input type="text" placeholder="search" v-model="keyword" @change="handleInput()" />
+  <input
+    type="text"
+    placeholder="search"
+    v-model="keyword"
+    @change="handleInput()"
+  />
 </template>
 
 <script>
 export default {
-  name: "Search",
+  name: 'Search',
   props: [],
   data() {
     return {
-      keyword: ""
+      keyword: '',
     };
   },
   methods: {
     handleInput() {
-      this.$emit("handleSearch", this.keyword);
-    }
-  }
+      this.$emit('handleSearch', this.keyword);
+    },
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>
