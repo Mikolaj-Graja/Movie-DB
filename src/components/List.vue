@@ -1,7 +1,5 @@
 <template>
   <div>
-    <Header @handleSearch="handleSearch" />
-
     <div class="container">
       <ul>
         <li v-for="result in searchResult" :key="result.id" class="text-white card">
@@ -16,15 +14,12 @@
 </template>
 
 <script>
-import Header from "./Header";
 import api_key from "./API_key"; // API_key.js is in .gitignore, bacaue it is unique and cannot be seen in public
 
 export default {
   name: "List",
-  props: [],
-  components: {
-    Header
-  },
+  props: ["searchResult"],
+  components: {},
   created() {
     fetch(`https://api.themoviedb.org/3/configuration?api_key=${api_key}`)
       .then(response => response.json())
@@ -35,23 +30,10 @@ export default {
   },
   data() {
     return {
-      searchResult: "",
       configuration: "w500",
       base_URL: `https://image.tmdb.org/t/p/w200`,
       keyword: ""
     };
-  },
-  methods: {
-    handleSearch(keyword) {
-      console.log(keyword);
-      fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${keyword}`
-      )
-        .then(response => response.json())
-        .then(data => {
-          this.searchResult = data.results;
-        });
-    }
   }
 };
 </script>
