@@ -1,14 +1,24 @@
 <template>
   <div>
     <div class="container">
-      <ul>
+      <ul v-if="searchResult.length>0">
         <li v-for="result in searchResult" :key="result.id" class="text-white card">
           <img :src="base_URL + result.poster_path" />
           <p class="title">{{ result.title }}</p>
-          <p>Popularity: {{ result.popularity }}</p>
-          <p>Number of votes: {{ result.vote_count }}</p>
+          <p>
+            Popularity:
+            <b>{{ result.popularity }}</b>
+          </p>
+          <p>
+            Number of votes:
+            <b>{{ result.vote_count }}</b>
+          </p>
         </li>
       </ul>
+      <div v-else class="no-result">
+        <div class="alert alert-dismissible alert-primary">No results for your keyword</div>
+        <div class="space"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -55,5 +65,8 @@ li {
   font-weight: 800;
   line-height: 40px;
   color: green;
+}
+.space {
+  height: 33vh;
 }
 </style>
