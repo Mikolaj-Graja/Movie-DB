@@ -1,4 +1,10 @@
-# vue_api
+# Vue API project
+
+## It connects to imbd (movie base)
+
+### Search movies, view details and more!
+
+<!--
 
 ## Project setup
 ```
@@ -18,7 +24,4 @@ npm run build
 ### Lints and fixes files
 ```
 npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+``` -->
