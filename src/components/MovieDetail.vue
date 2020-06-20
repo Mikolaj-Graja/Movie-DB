@@ -2,7 +2,7 @@
   <div class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title">{{movieInfo.title}}</h2>
+        <h2 class="modal-title">{{ movieInfo.title }}</h2>
         <button
           type="button"
           class="close"
@@ -15,17 +15,46 @@
       </div>
       <div class="modal-body">
         <div class="img-container">
-          <img :src="this.baseURL + this.movieInfo.poster" alt="moviePoster" />
+          <img
+            :src="`${this.baseURL}w500/${this.movieInfo.poster}`"
+            alt="moviePoster`"
+          />
         </div>
         <div class="info">
-          <h4>Overview</h4>
-          <p>{{this.movieInfo.overview}}</p>
-          <h4>Genres</h4>
-          <p>{{this.movieInfo.genres}}</p>
-          <h4>Popularity</h4>
-          <p>{{this.movieInfo.popularity}}</p>
-          <h4>Votes</h4>
-          <p>{{this.movieInfo.votes}}</p>
+          <ul>
+            <li>
+              <h4>Overview</h4>
+              <p>{{ this.movieInfo.overview }}</p>
+            </li>
+            <li>
+              <h4>Genres</h4>
+              <span v-for="genre in this.movieInfo.genres" :key="genre.id">
+                {{ genre.name }}
+              </span>
+            </li>
+            <li>
+              <h4>Popularity</h4>
+              <span>{{ this.movieInfo.popularity }}</span>
+            </li>
+            <li>
+              <h4>Votes</h4>
+              <span>{{ this.movieInfo.votes }}</span>
+            </li>
+            <li>
+              <h4>Production countries</h4>
+              <span
+                v-for="country in this.movieInfo.countries"
+                :key="country.iso_3166_1"
+              >
+                {{ country.name }}
+              </span>
+            </li>
+            <li>
+              <a :href="imbdBaseURL + this.movieInfo.id"
+                >Link do filmu na stronie imbd</a
+              >
+            </li>
+          </ul>
         </div>
       </div>
       <div class="modal-footer"></div>
@@ -35,19 +64,21 @@
 
 <script>
 export default {
-  name: "MovieDetail",
-  props: ["moreInfo", "movieInfo"],
+  name: 'MovieDetail',
+  props: ['moreInfo', 'movieInfo', 'baseURL', 'api_key'],
   data() {
     return {
-      baseURL: `https://image.tmdb.org/t/p/w500`,
-      isActive: true
+      isActive: true,
+      imbdBaseURL: `https://www.themoviedb.org/movie/`,
+      // imbdURLPartTwo: '?api_key=',
     };
   },
   methods: {
     handleClose() {
-      (this.isActive = false), this.$emit("handleClose", this.isActive);
-    }
-  }
+      this.isActive = false;
+      this.$emit('handleClose', this.isActive);
+    },
+  },
 };
 </script>
 
@@ -86,6 +117,23 @@ img {
 .info {
   background-color: rgb(47, 47, 47);
   padding: 15px;
-  max-height: 80%;
+  max-height: 90%;
+  flex-grow: 1;
+}
+ul {
+  flex-direction: column;
+  align-content: center;
+  max-height: 100%;
+  flex-wrap: nowrap;
+}
+li {
+  max-width: 90%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px dashed rgba(0, 128, 0, 0.438);
+  /* flex-basis: 10%; */
+}
+span {
+  margin-left: 10px;
 }
 </style>

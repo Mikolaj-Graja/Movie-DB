@@ -1,9 +1,13 @@
 <template>
   <div>
     <div class="container">
-      <ul v-if="searchResult.length>0">
-        <li v-for="result in searchResult" :key="result.id" class="text-white card">
-          <img :src="base_URL + result.poster_path" />
+      <ul v-if="searchResult.length > 0">
+        <li
+          v-for="result in searchResult"
+          :key="result.id"
+          class="text-white card"
+        >
+          <img :src="base_URL + configuration + result.poster_path" />
           <p class="title">{{ result.title }}</p>
           <p>
             Popularity:
@@ -18,70 +22,87 @@
             href="#"
             role="button"
             @click="handlemoreInfo(result.id)"
-          >More Details</button>
+          >
+            More Details
+          </button>
         </li>
       </ul>
       <div v-else class="no-result">
-        <div class="alert alert-dismissible alert-primary">No results for your keyword</div>
+        <div class="alert alert-dismissible alert-primary">
+          No results for your keyword
+        </div>
         <div class="space"></div>
       </div>
-      <MovieDetail v-if="moreInfo" :movieInfo="movieInfo" @handleClose="handleChildClose" />
+      <MovieDetail
+        v-if="moreInfo"
+        :movieInfo="movieInfo"
+        :baseURL="base_URL"
+        :api_key="api_key"
+        @handleClose="handleChildClose"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import api_key from "./API_key"; // API_key.js is in .gitignore, bacaue it is unique and cannot be seen in public
-import MovieDetail from "./MovieDetail";
+import api_key from './API_key'; // API_key.js is in .gitignore, bacaue it is unique and cannot be seen in public
+import MovieDetail from './MovieDetail';
 
 export default {
-  name: "List",
-  props: ["searchResult"],
+  name: 'List',
+  props: ['searchResult'],
   components: {
-    MovieDetail
+    MovieDetail,
   },
   created() {
     fetch(`https://api.themoviedb.org/3/configuration?api_key=${api_key}`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         console.log(data);
       })
-      .catch(err => alert(err));
+      .catch((err) => alert(err));
   },
   data() {
     return {
-      base_URL: `https://image.tmdb.org/t/p/w200`,
-      keyword: "",
+      base_URL: `https://image.tmdb.org/t/p/`,
+      keyword: '',
       moreInfo: false,
+      api_key: api_key,
+      configuration: 'w200/',
       movieInfo: {
-        overview: "",
-        genres: "",
-        poster: "",
-        title: "",
-        popularity: "",
-        votes: ""
-      }
+        overview: '',
+        genres: '',
+        poster: '',
+        title: '',
+        popularity: '',
+        votes: '',
+        companies: '',
+        id: '',
+        homepage: '',
+      },
     };
   },
   methods: {
     handlemoreInfo(movieId) {
-      console.log(movieId);
       this.moreInfo = true;
       fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${api_key}`)
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           this.movieInfo.overview = data.overview;
-          this.movieInfo.genres = data.genre_ids;
+          this.movieInfo.genres = data.genres;
           this.movieInfo.poster = data.poster_path;
           this.movieInfo.title = data.title;
           this.movieInfo.popularity = data.popularity;
           this.movieInfo.votes = data.vote_count;
+          this.movieInfo.countries = data.production_countries;
+          this.movieInfo.id = data.id;
+          this.movieInfo.homepage = data.homepage;
         });
     },
     handleChildClose(isActive) {
       this.moreInfo = isActive;
-    }
-  }
+    },
+  },
 };
 </script>
 
