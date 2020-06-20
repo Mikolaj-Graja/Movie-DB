@@ -25,7 +25,7 @@
         <div class="alert alert-dismissible alert-primary">No results for your keyword</div>
         <div class="space"></div>
       </div>
-      <MovieDetail v-if="moreInfo" :movieInfo="movieInfo" />
+      <MovieDetail v-if="moreInfo" :movieInfo="movieInfo" @handleClose="handleChildClose" />
     </div>
   </div>
 </template>
@@ -50,17 +50,36 @@ export default {
   },
   data() {
     return {
-      configuration: "w500",
       base_URL: `https://image.tmdb.org/t/p/w200`,
       keyword: "",
       moreInfo: false,
-      movieInfo: {}
+      movieInfo: {
+        overview: "",
+        genres: "",
+        poster: "",
+        title: "",
+        popularity: "",
+        votes: ""
+      }
     };
   },
   methods: {
-    handlemoreInfo(id) {
-      console.log(id);
-      this.movieInfo = this.moreInfo = true;
+    handlemoreInfo(movieId) {
+      console.log(movieId);
+      this.moreInfo = true;
+      fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${api_key}`)
+        .then(response => response.json())
+        .then(data => {
+          this.movieInfo.overview = data.overview;
+          this.movieInfo.genres = data.genre_ids;
+          this.movieInfo.poster = data.poster_path;
+          this.movieInfo.title = data.title;
+          this.movieInfo.popularity = data.popularity;
+          this.movieInfo.votes = data.vote_count;
+        });
+    },
+    handleChildClose(isActive) {
+      this.moreInfo = isActive;
     }
   }
 };

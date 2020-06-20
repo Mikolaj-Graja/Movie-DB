@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     handleSearch(keyword) {
-      // console.log(keyword)
       fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${keyword}`
       )
