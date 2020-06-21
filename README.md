@@ -14,28 +14,39 @@ Click on image to view more details
 
 ##### Notes
 
-It is in development state.
-For now it only fetch first page from database when you insert keyword.
-It was first API project using vue.js
+1. It is in development state.
+2. For now it only fetch first page from database when you insert keyword.
+3. It was first API project using vue.js
+4. API_key file is in .gitignore due to sensitive data. It has only one variable with api_key that is unique.
 
-<!--
+###### Project setup
 
-## Project setup
 ```
 npm install
+npm install -g @vue/cli
+OR
+yarn global add @vue/cli
+
+vue create my-project
+# OR
+vue ui
+
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+<!-- ### Compiles and minifies for production
+
 ```
 npm run build
-```
+``` -->
 
 ### Lints and fixes files
+
 ```
 npm run lint
-``` -->
+```
