@@ -45,7 +45,6 @@ export default {
       } else {
         this.nextDisabled = false;
       }
-      console.log("updateVisible");
     },
     nextPage() {
       this.currentPage++;
