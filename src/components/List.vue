@@ -3,7 +3,7 @@
     <SortItems v-if="searchResult.length > 0" :searchResult="this.searchResult" @sort="sort"></SortItems>
     <div class="container">
       <ul v-if="searchResult.length > 0">
-        <li v-for="result in this.movies" :key="result.id" class="text-white card">
+        <li v-for="result in this.currentPageMovies" :key="result.id" class="text-white card">
           <img :src="base_URL + configuration + result.poster_path" />
           <p class="title">{{ result.title }}</p>
           <p>
@@ -26,6 +26,7 @@
         <div class="alert alert-dismissible alert-primary">No results for your keyword</div>
         <div class="space"></div>
       </div>
+      <Pagination :movies="this.movies" @pageUpdate="pageUpdate" />
       <MovieDetail
         v-if="moreInfo"
         :movieInfo="movieInfo"
@@ -41,22 +42,16 @@
 import api_key from "./API_key"; // API_key.js is in .gitignore, bacaue it is unique and cannot be seen in public
 import MovieDetail from "./MovieDetail";
 import SortItems from "./SortItems";
+import Pagination from "./Pagination";
 
 export default {
   name: "List",
   props: ["searchResult"],
   components: {
     MovieDetail,
-    SortItems
+    SortItems,
+    Pagination
   },
-  // created() {
-  //   fetch(`https://api.themoviedb.org/3/configuration?api_key=${api_key}`)
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       console.log(data);
-  //     })
-  //     .catch(err => alert(err));
-  // },
   data() {
     return {
       base_URL: `https://image.tmdb.org/t/p/`,
@@ -66,6 +61,7 @@ export default {
       configuration: "w200/",
       sortWhat: "default",
       sorted: "",
+      currentPageMovies: [],
       movieInfo: {
         overview: "",
         genres: "",
@@ -100,9 +96,7 @@ export default {
       this.moreInfo = isActive;
     },
     sort(event) {
-      console.log("sort at List");
       this.sortWhat = event;
-
       this.sorted = [...this.searchResult].sort((el1, el2) => {
         if (this.sortWhat == "popularity") {
           return el1.popularity > el2.popularity ? -1 : 1;
@@ -112,6 +106,9 @@ export default {
           return this.searchResult;
         }
       });
+    },
+    pageUpdate(visibleMovies) {
+      this.currentPageMovies = visibleMovies;
     }
   },
   computed: {
