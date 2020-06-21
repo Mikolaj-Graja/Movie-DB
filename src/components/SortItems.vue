@@ -1,13 +1,13 @@
 <template>
   <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <label class="btn btn-success active" @click="sortDefault">
+    <label class="btn btn-success" :class="{active: defaultActive}" @click="sortDefault">
       <input type="radio" name="options" id="option1" autocomplete="off" checked /> Default
     </label>
-    <label class="btn btn-success" :value="'name'" @click="sortTitle">
+    <label class="btn btn-success" :class="{active: titleActive}" @click="sortTitle">
       <input type="radio" name="options" id="option2" autocomplete="off" /> Title
     </label>
-    <label class="btn btn-success">
-      <input type="radio" name="options" id="option3" autocomplete="off" @click="sortPopularity" /> Popularity
+    <label class="btn btn-success" :class="{active: popularityActive}" @click="sortPopularity">
+      <input type="radio" name="options" id="option3" autocomplete="off" /> Popularity
     </label>
   </div>
 </template>
@@ -19,26 +19,35 @@ export default {
   methods: {
     sortTitle() {
       this.sortWhat = "title";
-      console.log("i am at sortTitle");
+      this.titleActive = true;
+      this.defaultActive = false;
+      this.popularityActive = false;
       this.sort();
     },
     sortPopularity() {
       this.sortWhat = "popularity";
+      this.titleActive = false;
+      this.defaultActive = false;
+      this.popularityActive = true;
       this.sort();
     },
     sortDefault() {
       this.sortWhat = "default";
+      this.titleActive = false;
+      this.defaultActive = true;
+      this.popularityActive = false;
       this.sort();
     },
     sort() {
-      console.log(this.sortWhat + "I am at sort");
-      // this.sortWhat = `${event.value}`;
       this.$emit("sort", this.sortWhat);
     }
   },
   data() {
     return {
-      sortWhat: ""
+      sortWhat: "",
+      defaultActive: true,
+      popularityActive: false,
+      titleActive: false
     };
   }
 };
@@ -48,6 +57,5 @@ export default {
 .btn-group-toggle {
   position: relative;
   top: -20px;
-  /* background-color: green; */
 }
 </style>
