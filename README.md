@@ -11,6 +11,7 @@ Click on image to view more details
 3. bootstrap
 4. bootswatch
 5. Visual studio Code with Prettier, ESLint and Vetur.
+6. ChromeDevTools
 
 ##### Notes
 
