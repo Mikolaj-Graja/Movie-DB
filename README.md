@@ -20,19 +20,8 @@ Click on image to view more details
 3. It was first API project using vue.js
 4. API_key file is in .gitignore due to sensitive data. It has only one variable with api_key that is unique.
 
-###### Project setup
 
-```
-npm install
-npm install -g @vue/cli
-OR
-yarn global add @vue/cli
 
-vue create my-project
-# OR
-vue ui
-
-```
 
 ### Compiles and hot-reloads for development
 
