@@ -15,10 +15,7 @@
       </div>
       <div class="modal-body">
         <div class="img-container">
-          <img
-            :src="`${this.baseURL}w500/${this.movieInfo.poster}`"
-            alt="moviePoster`"
-          />
+          <img :src="`${this.baseURL}w500/${this.movieInfo.poster}`" alt="moviePoster`" />
         </div>
         <div class="info">
           <ul>
@@ -28,9 +25,7 @@
             </li>
             <li>
               <h4>Genres</h4>
-              <span v-for="genre in this.movieInfo.genres" :key="genre.id">
-                {{ genre.name }}
-              </span>
+              <span v-for="genre in this.movieInfo.genres" :key="genre.id">{{ genre.name }}</span>
             </li>
             <li>
               <h4>Popularity</h4>
@@ -45,14 +40,10 @@
               <span
                 v-for="country in this.movieInfo.countries"
                 :key="country.iso_3166_1"
-              >
-                {{ country.name }}
-              </span>
+              >{{ country.name }}</span>
             </li>
             <li>
-              <a :href="imbdBaseURL + this.movieInfo.id"
-                >Link do filmu na stronie imbd</a
-              >
+              <a :href="imbdBaseURL + this.movieInfo.id">Link do filmu na stronie imbd</a>
             </li>
           </ul>
         </div>
@@ -64,21 +55,21 @@
 
 <script>
 export default {
-  name: 'MovieDetail',
-  props: ['moreInfo', 'movieInfo', 'baseURL', 'api_key'],
+  name: "MovieDetail",
+  props: ["moreInfo", "movieInfo", "baseURL", "api_key"],
   data() {
     return {
       isActive: true,
-      imbdBaseURL: `https://www.themoviedb.org/movie/`,
+      imbdBaseURL: `https://www.themoviedb.org/movie/`
       // imbdURLPartTwo: '?api_key=',
     };
   },
   methods: {
     handleClose() {
       this.isActive = false;
-      this.$emit('handleClose', this.isActive);
-    },
-  },
+      this.$emit("handleClose", this.isActive);
+    }
+  }
 };
 </script>
 
