@@ -4,7 +4,12 @@
     <div class="container">
       <ul v-if="searchResult.length > 0">
         <li v-for="result in this.currentPageMovies" :key="result.id" class="text-white card">
-          <img :src="base_URL + configuration + result.poster_path" />
+          <img
+            class="pointer"
+            async
+            @click="handlemoreInfo(result.id)"
+            :src="base_URL + configuration + result.poster_path"
+          />
           <p class="title">{{ result.title }}</p>
           <p>
             Popularity:
@@ -14,12 +19,12 @@
             Number of votes:
             <b>{{ result.vote_count }}</b>
           </p>
-          <button
+          <!-- <button
             class="btn btn-info"
             href="#"
             role="button"
             @click="handlemoreInfo(result.id)"
-          >More Details</button>
+          >More Details</button>-->
         </li>
       </ul>
       <div v-else class="no-result">
@@ -139,5 +144,12 @@ li {
 }
 .space {
   height: 33vh;
+}
+.pointer {
+  cursor: pointer;
+  transition: linear 0.3s;
+}
+.pointer:hover {
+  transform: scale(0.9);
 }
 </style>

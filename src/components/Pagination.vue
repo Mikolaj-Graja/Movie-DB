@@ -10,7 +10,7 @@
         class="page-item"
         :class="{active: (currentPage === page)}"
       >
-        <a class="page-link" href="#">{{page}}</a>
+        <a class="page-link" href="#" @click="thisPage(page)">{{page}}</a>
       </li>
       <li class="page-item" :class="{disabled: nextDisabled}">
         <a class="page-link" href="#" @click="nextPage">&raquo;</a>
@@ -53,6 +53,10 @@ export default {
     },
     previousPage() {
       this.currentPage--;
+      this.updateVisible();
+    },
+    thisPage(page) {
+      this.currentPage = page;
       this.updateVisible();
     }
   },
