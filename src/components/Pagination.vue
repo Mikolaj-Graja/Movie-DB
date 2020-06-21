@@ -1,25 +1,18 @@
 <template>
   <div v-if="this.movies">
     <ul class="pagination pagination-lg">
-      <li class="page-item disabled">
-        <a class="page-link" href="#">&laquo;</a>
+      <li class="page-item" :class="{disabled: previousDisabled}">
+        <a class="page-link" href="#" @click="previousPage">&laquo;</a>
       </li>
-      <li class="page-item active">
-        <a class="page-link" href="#">1</a>
+      <li
+        v-for="page in totalPages"
+        :key="page.id"
+        class="page-item"
+        :class="{active: (currentPage === page)}"
+      >
+        <a class="page-link" href="#">{{page}}</a>
       </li>
-      <li class="page-item">
-        <a class="page-link" href="#">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">3</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">4</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">5</a>
-      </li>
-      <li class="page-item">
+      <li class="page-item" :class="{disabled: nextDisabled}">
         <a class="page-link" href="#" @click="nextPage">&raquo;</a>
       </li>
     </ul>
@@ -35,7 +28,8 @@ export default {
       currentPage: 1,
       moviesOnPage: 5,
       visibleMovies: [],
-      firstElOnPage: 0
+      firstElOnPage: 0,
+      nextDisabled: false
     };
   },
   methods: {
@@ -46,15 +40,32 @@ export default {
         this.firstElOnPage + this.moviesOnPage
       );
       this.$emit("pageUpdate", this.visibleMovies);
+      if (this.visibleMovies.length === 0) {
+        this.nextDisabled = true;
+      } else {
+        this.nextDisabled = false;
+      }
       console.log("updateVisible");
     },
     nextPage() {
       this.currentPage++;
       this.updateVisible();
+    },
+    previousPage() {
+      this.currentPage--;
+      this.updateVisible();
     }
   },
   updated() {
     this.updateVisible();
+  },
+  computed: {
+    previousDisabled() {
+      return this.currentPage <= 1 ? true : false;
+    },
+    totalPages() {
+      return this.movies.length / this.moviesOnPage;
+    }
   }
 };
 </script>

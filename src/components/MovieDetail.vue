@@ -43,7 +43,7 @@
               >{{ country.name }}</span>
             </li>
             <li>
-              <a :href="imbdBaseURL + this.movieInfo.id">Link do filmu na stronie imbd</a>
+              <a :href="imbdBaseURL + this.movieInfo.id">Link to movie on imbd</a>
             </li>
           </ul>
         </div>
