@@ -2,12 +2,9 @@
   "name": "vue_api",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mikolaj-graja.github.io/Movie-DB/",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
