@@ -5,7 +5,7 @@
         <a class="page-link" href="#" @click="previousPage">&laquo;</a>
       </li>
       <li
-        v-for="page in totalPages"
+        v-for="page in totalPages-1"
         :key="page.id"
         class="page-item"
         :class="{active: (currentPage === page)}"
